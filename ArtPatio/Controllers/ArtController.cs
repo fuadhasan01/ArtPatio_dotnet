@@ -12,7 +12,8 @@ namespace ArtPatio.Controllers
     {
         private readonly ArtworkRepository _artworkRepository;
         private readonly UserRepository _userRepository;
-        private readonly TransactionRepository _transactionRepository;
+        private readonly TransactionRepository _transactionRepository; 
+        //
 
         public ArtController(ArtworkRepository artworkRepository, UserRepository userRepository, TransactionRepository transactionRepository)
         {
