@@ -1,0 +1,27 @@
+﻿<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody id="tbl_details">
+       
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+
+        getResult();
+
+        function getResult() {
+            $.post('/Demo/GetTable', function (data) {
+
+                $('#tbl_details').append(data.tableData);
+
+            });
+        }
+    </script>
+}

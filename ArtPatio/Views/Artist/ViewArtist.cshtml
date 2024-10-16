@@ -1,0 +1,69 @@
+﻿@model ArtPatio.ViewModels.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "Viewing Artist";
+}
+
+<h1>@Model.UserProfile.Name's Profile</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">User Details</h5>
+        <p><strong>Email:</strong> @Model.UserProfile.Email</p>
+        <p><strong>Address:</strong> @Model.UserProfile.Address</p>
+        <p><strong>Contact:</strong> @Model.UserProfile.Contact</p>
+        <p><strong>Description:</strong> @Model.UserProfile.Description</p>
+    </div>
+</div>
+
+<h2>Art Section</h2>
+
+<div class="row">
+    @if (Model.Artworks != null && Model.Artworks.Any())
+    {
+        foreach (var artwork in Model.Artworks)
+        {
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="@Url.Content(artwork.ArtImage)" class="card-img-top" alt="@artwork.ArtName" style="height: 200px; object-fit: contain; background-color: #f8f9fa;" />
+                    <div class="card-body flex-grow-1">
+                        <h5 class="card-title text-primary fw-bold">@artwork.ArtName</h5>
+                        <p class="card-text"><span class="fw-bolder">Material:</span> @artwork.ArtMaterial</p>
+                        <p class="card-text"><span class="fw-bolder">Price:</span> @artwork.Price</p>
+                        <p class="card-text">
+                            <span class="fw-bolder">Status:</span>
+                            <span class="@(artwork.Status == "Available" ? "text-success" : "text-danger")">
+                                @(artwork.Status == "Available" ? "Available" : "Sold")
+                            </span>
+                        </p>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+
+
+                            @if (Context.Session.GetString("UserType") == "Customer" && artwork.Status == "Available")
+                            {
+                                <form asp-action="Buy" asp-controller="Art" method="post" class="w-25">
+                                    <input type="hidden" name="artId" value="@artwork.ArtId" />
+                                    <button type="submit" class="btn btn-success w-100">Buy Art</button>
+                                </form>
+                            }
+
+                            <a href="@Url.Action("Details", "Art", new { id = artwork.ArtId })" class="btn btn-info w-25">Details</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No artworks uploaded by this artist.</p>
+    }
+</div>
+
+

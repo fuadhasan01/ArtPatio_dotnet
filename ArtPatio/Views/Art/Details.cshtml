@@ -1,0 +1,49 @@
+﻿@model ArtPatio.Models.Artwork
+
+@{
+    ViewData["Title"] = "Artwork Details";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<hr />
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <img src="@Url.Content(Model.ArtImage)" class="card-img-top" alt="@Model.ArtName" style="height: 400px; object-fit: contain; background-color: #f8f9fa;" />
+                <div class="card-body">
+                    <h2 class="card-title text-primary fw-bold text-center">@Model.ArtName</h2>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="card-text"><span class="fw-bolder">Material:</span> @Model.ArtMaterial</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="card-text"><span class="fw-bolder">Price:</span> @Model.Price BDT</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="card-text">
+                                <span class="fw-bolder">Status:</span> <span class="@(Model.Status == "Available" ? "text-success" : "text-danger")">
+                                    @(Model.Status == "Available" ? "Available" : "Sold")
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="card-text mt-3"><span class="fw-bolder">Description:</span></p>
+                    <p class="card-text">@Model.ArtDetails</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <!-- Welcome Section -->
+    <div class="jumbotron text-center bg-transparent p-5 shadow-sm rounded">
+        <h1 class="display-4">Welcome to ArtPatio</h1>
+        <p class="lead">Your one-stop platform for discovering, buying, and showcasing digital artwork.</p>
+        <hr class="my-4">
+        <p>Explore beautiful creations or showcase your artistic talent to the world.</p>
+        <a class="btn btn-primary btn-lg mr-2" href="/Account/Login" role="button">Explore Artworks</a>
+        <a class="btn btn-secondary btn-lg" href="/Account/Signup" role="button">Join as an Artist</a>
+    </div>
+
+    <!-- Featured Artworks Section -->
+    <section class="mt-5">
+        <h2 class="text-center mb-4">Featured Artworks</h2>
+        <div class="row">
+            <!-- Assuming you're dynamically loading artworks, here are placeholders for now -->
+            @for (int i = 1; i <= 3; i++)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="~/images/art@(i).jpg" class="card-img-top" alt="Artwork @(i)" style="height: 250px; object-fit: cover;" />
+
+                        <div class="card-body">
+                            <h5 class="card-title">Artwork Title @i</h5>
+                            <p class="card-text">Short description of this beautiful artwork.</p>
+                            <a href="/Account/Login/@i" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="bg-light p-5 mt-5 rounded shadow-sm">
+        <h2 class="text-center mb-4">About ArtPatio</h2>
+        <p class="text-center">
+            ArtPatio is a platform where artists showcase their creativity and art lovers discover unique digital masterpieces. Whether you're an artist looking to share your work, or a buyer looking for exclusive art, ArtPatio has something for you. Join our growing community and be part of the art revolution.
+        </p>
+        <div class="text-center mt-4">
+            <a class="btn btn-primary btn-lg" href="/About">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Call to Action Section for Artists -->
+    <section class="mt-5 text-center">
+        <h2>Are You an Artist?</h2>
+        <p class="lead">Showcase your art, reach more buyers, and build your presence in the digital art world.</p>
+        <a href="/Account/Signup" class="btn btn-secondary btn-lg">Join ArtPatio Today</a>
+    </section>
+</div>

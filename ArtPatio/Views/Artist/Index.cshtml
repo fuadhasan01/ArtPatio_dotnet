@@ -1,0 +1,64 @@
+﻿@model ArtPatio.Models.UserInfoViewModel
+@using System.Linq 
+
+@{
+    ViewData["Title"] = "Artist Page";
+}
+
+<div class="container mt-5">
+    
+
+    <!-- Artworks Section -->
+    <h2 class="text-center mb-4">Artworks</h2>
+
+    <div class="row">
+        @if (ViewBag.Artworks != null && ((List<ArtPatio.Models.Artwork>)ViewBag.Artworks).Count > 0)
+        {
+            var artworks = (List<ArtPatio.Models.Artwork>)ViewBag.Artworks;
+
+            foreach (var artwork in artworks.Take(3))
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 d-flex flex-column">
+                        <img src="@Url.Content(artwork.ArtImage)" class="card-img-top" alt="@artwork.ArtName" style="height: 200px; object-fit: contain; background-color: #f8f9fa;" />
+                        <div class="card-body flex-grow-1">
+                            <h5 class="card-title text-primary fw-bold">@artwork.ArtName</h5>
+                            <p class="card-text"><span class="fw-bolder">Material:</span> @artwork.ArtMaterial</p>
+                            <p class="card-text"><span class="fw-bolder">Price:</span> @artwork.Price</p>
+                            <p class="card-text">
+                                <span class="fw-bolder">Status:</span>
+                                <span class="@(artwork.Status == "Available" ? "text-success" : "text-danger")">
+                                    @(artwork.Status == "Available" ? "Available" : "Sold")
+                                </span>
+                            </p>
+
+                            <p class="card-text text-decoration-none"><span class="fw-bolder">Artist Name:</span> <a href="@Url.Action("ViewArtist","Artist", new{id=artwork.UserId})" class="text-primary text-decoration-none">@artwork.UserName</a><p />
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                
+                                    <a href="@Url.Action("Details", "Art", new { id = artwork.ArtId })" class="btn btn-info w-25">Details</a>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">No artworks uploaded by Artist yet.</p>
+        }
+    </div>
+
+
+
+    <!-- More Arts Button -->
+    @if (ViewBag.Artworks != null && ((List<ArtPatio.Models.Artwork>)ViewBag.Artworks).Count > 3)
+    {
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Index", "Art")" class="btn btn-primary">More Arts</a>
+        </div>
+    }
+</div>

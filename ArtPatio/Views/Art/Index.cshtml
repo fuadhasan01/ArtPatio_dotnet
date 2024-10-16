@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ArtPatio.Models.Artwork>
+
+@{
+    ViewData["Title"] = "Arts";
+}
+
+<h1 class="my-4 text-center">Arts</h1>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<hr>
+
+
+
+<div class="container">
+    <div class="row">
+        @if (!Model.Any()) // Check if there are no artworks
+        {
+            <div class="col-12 text-center">
+                <p class="lead">No arts are available.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var artwork in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 d-flex flex-column">
+                        <img src="@Url.Content(artwork.ArtImage)" class="card-img-top" alt="@artwork.ArtName" style="height: 200px; object-fit: contain; background-color: #f8f9fa;" />
+                        <div class="card-body flex-grow-1">
+                            <h5 class="card-title text-primary fw-bold">@artwork.ArtName</h5>
+                            <p class="card-text"><span class="fw-bolder">Material:</span> @artwork.ArtMaterial</p>
+                            <p class="card-text"><span class="fw-bolder">Price:</span> @artwork.Price</p>
+                            <p class="card-text">
+                                <span class="fw-bolder">Status:</span>
+                                <span class="@(artwork.Status == "Available" ? "text-success" : "text-danger")">
+                                    @(artwork.Status == "Available" ? "Available" : "Sold")
+                                </span>
+                            </p>
+
+
+                            <p class="card-text text-decoration-none"><span class="fw-bolder">Artist Name:</span> <a href="@Url.Action("ViewArtist","Artist", new{id=artwork.UserId})" class="text-primary text-decoration-none">@artwork.UserName</a><p/>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                @if (Context.Session.GetString("UserEmail") != null)
+                                {
+                                    // User is logged in
+                                    if (Context.Session.GetString("UserType") == "Customer" && artwork.Status=="Available")
+                                    {
+                                        <form asp-action="Buy" asp-controller="Art" method="post" class="w-25">
+                                            <input type="hidden" name="artId" value="@artwork.ArtId" />
+                                            <button type="submit" class="btn btn-success w-100">Buy Art</button>
+                                        </form>
+                                    }
+
+                                    // Show "Details" button for artists
+                                    <a href="@Url.Action("Details", "Art", new { id = artwork.ArtId })" class="btn btn-info w-25">Details</a>
+                                    
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+</div>

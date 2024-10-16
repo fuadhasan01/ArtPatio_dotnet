@@ -1,0 +1,95 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&family=Ubuntu:ital@0;1&family=Varela+Round&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+}
+
+    .container .left {
+        font-family: 'Offside', cursive;
+        background-image: url("../images/blackbg.jpg");
+        background-size: cover;
+        background-color: black;
+        color: white;
+        width: 42%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0px 30px 30px 0px;
+        box-shadow: 0 0 30px #4b4b4d;
+    }
+
+.left img {
+    width: 340px;
+}
+
+.container .left p {
+    width: 70%;
+    margin-top: 0;
+    text-align: center;
+}
+
+.container .left h1 {
+    font-size: 35px;
+}
+
+.container .left a {
+    text-decoration: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: 1px solid white;
+    padding: 13px 50px;
+    border-radius: 33px;
+    cursor: pointer;
+    color: white;
+    margin-top: 20px;
+    overflow: hidden;
+    outline: none;
+}
+
+.left a:hover {
+    background-color: white;
+    color: black;
+}
+
+.container .right {
+    width: 58%;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input, select, textarea {
+    padding: 10px;
+    width: 400px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin: 10px 0;
+    background-color: #e5f3f3;
+}
+
+button {
+    background-color: #000;
+    border: 1px solid white;
+    padding: 13px 50px;
+    border-radius: 33px;
+    cursor: pointer;
+    color: white;
+    margin-top: 20px;
+}
+
+    button:hover {
+        background-color: #fff;
+        border: 1px solid black;
+        color: black;
+    }
