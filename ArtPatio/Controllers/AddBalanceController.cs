@@ -82,6 +82,7 @@ namespace ArtPatio.Controllers
                         balance = 0; // or any default value you want
                     }
                 }
+                //adsf
             }
 
             return balance;
