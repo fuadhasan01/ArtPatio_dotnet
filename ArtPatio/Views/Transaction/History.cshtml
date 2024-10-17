@@ -2,7 +2,6 @@
     ViewData["Title"] = "Transaction History";
 }
 
-
 @model List<ArtPatio.Models.Transaction>
 @using ArtPatio.Repositories
 @inject IConfiguration Configuration
@@ -20,6 +19,33 @@
 }
 
 <h2 class="text-center my-4">Transaction History</h2>
+
+<!-- Filter Form -->
+<div class="container mb-4">
+    <form asp-action="History" method="get" class="form-inline">
+        <div class="form-group mr-3">
+            <label for="startDate" class="mr-2">Start Date:</label>
+            <input type="date" name="startDate" class="form-control" value="@ViewData["startDate"]" />
+        </div>
+        <div class="form-group mr-3">
+            <label for="endDate" class="mr-2">End Date:</label>
+            <input type="date" name="endDate" class="form-control" value="@ViewData["endDate"]" />
+        </div>
+        <div class="form-group mr-3">
+            <label for="transactionType" class="mr-2">Transaction Type:</label>
+            <select name="transactionType" class="form-control">
+                <option value="">All</option>
+                <option value="ArtworkPurchased" selected="@(ViewData["transactionType"] == "ArtworkPurchased")">Artwork Purchased</option>
+                <option value="ArtworkSold" selected="@(ViewData["transactionType"] == "ArtworkSold")">Artwork Sold</option>
+                <option value="BalanceAdded" selected="@(ViewData["transactionType"] == "BalanceAdded")">Balance Added</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</div>
+
+
+
 
 @if (Model.Count == 0)
 {
