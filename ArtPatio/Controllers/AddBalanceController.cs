@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
-using ArtPatio.Models; // Ensure you have the Transaction model
-using ArtPatio.Repositories; // Ensure you have a reference to the Transaction repository
+using ArtPatio.Models; 
+using ArtPatio.Repositories;
 
 namespace ArtPatio.Controllers
 {

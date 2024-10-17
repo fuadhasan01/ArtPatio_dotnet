@@ -49,7 +49,7 @@
                                 @if (Context.Session.GetString("UserEmail") != null)
                                 {
                                     // User is logged in
-                                    if (Context.Session.GetString("UserType") == "Customer" && artwork.Status=="Available")
+                                    if (artwork.Status=="Available")
                                     {
                                         <form asp-action="Buy" asp-controller="Art" method="post" class="w-25">
                                             <input type="hidden" name="artId" value="@artwork.ArtId" />

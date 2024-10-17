@@ -28,9 +28,9 @@ namespace ArtPatio.Controllers
         {
            
             
-                List<Artwork> artworks = _artworkRepository.GetAllArtworks(); // Retrieve all artworks
+                List<Artwork> artworks = _artworkRepository.GetAllArtworks(); 
              
-                return View(artworks); // Pass the list to the view
+                return View(artworks); 
            
             
         }

@@ -10,6 +10,6 @@
         public decimal UpdatedBalance { get; set; }
         public DateTime TransactionDate { get; set; }
         public int? BuyerId { get; set; } // Customer who bought the art
-        public int? ArtistId { get; set; } // Artist who sold the art
+        public int? ArtistId { get; set; } 
     }
 }

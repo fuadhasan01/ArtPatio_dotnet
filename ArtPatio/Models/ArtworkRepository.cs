@@ -31,7 +31,7 @@ namespace ArtPatio.Repositories
                     cmd.Parameters.AddWithValue("@UserName", artwork.UserName);
                     cmd.Parameters.AddWithValue("@Price", artwork.Price);
 
-                    artwork.ArtId = (int)cmd.ExecuteScalar(); // Retrieve the newly created ArtId
+                    artwork.ArtId = (int)cmd.ExecuteScalar(); 
                 }
             }
         }

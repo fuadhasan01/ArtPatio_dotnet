@@ -15,7 +15,6 @@ namespace ArtPatio.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // Add a new transaction to the database
         public void AddTransaction(Transaction transaction)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

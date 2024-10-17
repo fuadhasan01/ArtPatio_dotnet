@@ -7,7 +7,7 @@
         public string ArtMaterial { get; set; }
         public string ArtDetails { get; set; }
         public string ArtImage { get; set; } // This should ideally store the file path or URL
-        public int UserId { get; set; } // ID of the artist uploading the art
+        public int UserId { get; set; } 
         public string UserName { get; set; }
         public decimal Price { get; set; }
         public string Status { get; set; }

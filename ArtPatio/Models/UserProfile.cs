@@ -32,5 +32,6 @@ namespace ArtPatio.Models
         public decimal Balance { get; set; }
 
         //public string ProfilePicture { get; set; }
+
     }
 }
