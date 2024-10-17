@@ -4,20 +4,78 @@
     ViewData["Title"] = "Arts";
 }
 
-<h1 class="my-4 text-center">Arts</h1>
+
+
+<h1 class="my-4 text-center text-primary">ArtWorks</h1>
 @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success">
         @TempData["SuccessMessage"]
     </div>
 }
-<hr>
+
+
+
+<!-- Search Form -->
+<div class="container mt-4">
+    <form asp-action="Index" method="get" class="mb-4" id="filterForm">
+        <div class="input-group mb-3">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Search for artworks..." aria-label="Search for artworks..." />
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <input type="number" name="minPrice" class="form-control" placeholder="Min Price" aria-label="Min Price" step="0.01" />
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="maxPrice" class="form-control" placeholder="Max Price" aria-label="Max Price" step="0.01" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-primary" type="submit">Filter</button>
+            </div>
+            <!-- Status Radio Buttons -->
+            
+                
+                
+            <div class="col-md-6">
+                <label class="text-primary fw-bold">Status:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="artworkStatus" id="statusAvailable" value="Available" onchange="this.form.submit()">
+                    <label class="form-check-label" for="statusAvailable">Available</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="artworkStatus" id="statusSold" value="Sold" onchange="this.form.submit()">
+                    <label class="form-check-label" for="statusSold">Sold</label>
+                </div>
+            </div>
+
+           
+        </div>
+
+        
+    </form>
+</div>
+
+<!-- Optional: Add some custom styling for the form elements -->
+<style>
+    .form-group {
+        margin-top: 1rem;
+    }
+
+        .form-group label {
+            margin-right: 15px;
+        }
+</style>
+
+
+
 
 
 
 <div class="container">
     <div class="row">
-        @if (!Model.Any()) 
+        @if (!Model.Any())
         {
             <div class="col-12 text-center">
                 <p class="lead">No arts are available.</p>
@@ -40,25 +98,21 @@
                                     @(artwork.Status == "Available" ? "Available" : "Sold")
                                 </span>
                             </p>
-
-
                             <p class="card-text text-decoration-none">
                                 <span class="fw-bolder">Artist Name:</span> <a href="@Url.Action("ViewArtist","Artist", new{id=artwork.UserId})" class="text-primary text-decoration-none">@artwork.UserName</a>
-                                <p/>
+                            </p>
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
                                 @if (Context.Session.GetString("UserEmail") != null)
                                 {
-                                    if((Context.Session.GetString("UserType") == "Artist" && Context.Session.GetInt32("Id") != artwork.UserId) && artwork.Status=="Available")
+                                    if ((Context.Session.GetString("UserType") == "Artist" && Context.Session.GetInt32("Id") != artwork.UserId) && artwork.Status == "Available")
                                     {
-                                        
                                         <form asp-action="Buy" asp-controller="Art" method="post" class="w-25">
                                             <input type="hidden" name="artId" value="@artwork.ArtId" />
                                             <button type="submit" class="btn btn-success w-100">Buy Art</button>
                                         </form>
                                     }
-                                   
                                     // User is logged in
                                     else if (Context.Session.GetString("UserType") != "Artist" && artwork.Status == "Available")
                                     {
@@ -69,14 +123,12 @@
                                     }
 
                                     // Show "Details" button for artists
-                                    <a href="@Url.Action("Details", "Art", new { id = artwork.ArtId })" class="btn btn-info w-25">Details</a>
-                                    
+                                    <a href="@Url.Action("Details", "Art", new { id = artwork.ArtId })" class="btn btn-primary w-25">Details</a>
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
-
             }
         }
     </div>

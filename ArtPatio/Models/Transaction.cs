@@ -1,8 +1,12 @@
-﻿namespace ArtPatio.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ArtPatio.Models
 {
     public class Transaction
     {
         public int TransactionId { get; set; }
+
+       
         public int UserId { get; set; }
         public int? ArtId { get; set; }
         public string TransactionType { get; set; }

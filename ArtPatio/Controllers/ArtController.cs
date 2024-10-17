@@ -21,37 +21,62 @@ namespace ArtPatio.Controllers
             _userRepository = userRepository;
             _transactionRepository = transactionRepository;
         }
-        
+
 
         // GET: /Art/Index
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm, decimal? minPrice, decimal? maxPrice, string artworkStatus)
         {
-           
-            
-                List<Artwork> artworks = _artworkRepository.GetAllArtworks(); 
-             
-                return View(artworks); 
-           
-            
+            List<Artwork> artworks = _artworkRepository.GetAllArtworks();
+
+            // If a search term is provided, filter the artworks
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                artworks = artworks.Where(a => a.ArtName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            if (minPrice.HasValue)
+            {
+                artworks = artworks.Where(a => a.Price >= minPrice.Value).ToList();
+            }
+
+            if (maxPrice.HasValue)
+            {
+                artworks = artworks.Where(a => a.Price <= maxPrice.Value).ToList();
+            }
+            if (!string.IsNullOrEmpty(artworkStatus))
+            {
+                artworks = artworks.Where(a => a.Status == artworkStatus).ToList();
+            }
+
+            return View(artworks);
         }
 
+        // GET: /Art/Upload
         // GET: /Art/Upload
         public IActionResult Upload()
         {
             if (HttpContext.Session.GetInt32("Id") != null)
             {
-                if(HttpContext.Session.GetString("UserType") == "Artist")
+                if (HttpContext.Session.GetString("UserType") == "Artist")
                 {
+                    // Get the artist's ID from the session
+                    int artistId = HttpContext.Session.GetInt32("Id").GetValueOrDefault();
+
+                   
+                    List<Artwork> artistArtworks = _artworkRepository.GetAllArtworksByUserId(artistId);
+
+                    
+                    ViewBag.ArtistArtworks = artistArtworks;
+
                     return View();
                 }
-                else 
+                else
                 {
-                    
+                    return NoContent();
                 }
-                
             }
-            return RedirectToAction("Login","Account");
+            return RedirectToAction("Login", "Account");
         }
+
 
         [HttpPost]
         public IActionResult Upload(Artwork artwork, IFormFile artImage)
@@ -75,7 +100,7 @@ namespace ArtPatio.Controllers
             // Add the artwork to the database
             _artworkRepository.AddArtwork(artwork);
             TempData["SuccessMessage"] = "Artwork uploaded successfully!";
-            return RedirectToAction("Index", "Art"); 
+            return RedirectToAction("Upload", "Art"); 
         }
 
         public IActionResult Details(int id)

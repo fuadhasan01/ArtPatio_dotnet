@@ -36,3 +36,45 @@
 </form>
 
 
+<h3 class="mt-5">Your Artworks</h3>
+@if (ViewBag.ArtistArtworks != null && ((List<Artwork>)ViewBag.ArtistArtworks).Count > 0)
+{
+    <div class="row">
+        @foreach (var artwork in (List<Artwork>)ViewBag.ArtistArtworks)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card  h-100 d-flex flex-column">
+                    <img src="@Url.Content(artwork.ArtImage)" class="card-img-top" alt="@artwork.ArtName" style="height: 200px; object-fit: contain; background-color: #f8f9fa;" />
+                    <div class="card-body flex-grow-1">
+                        <h5 class="card-title text-primary fw-bold">@artwork.ArtName</h5>
+                        <p class="card-text"><span class="fw-bolder">Material:</span> @artwork.ArtMaterial</p>
+                        <p class="card-text"><span class="fw-bolder">Price:</span> @artwork.Price</p>
+                        <p class="card-text">
+                            <span class="fw-bolder">Status:</span>
+                            <span class="@(artwork.Status == "Available" ? "text-success" : "text-danger")">
+                                @(artwork.Status == "Available" ? "Available" : "Sold")
+                            </span>
+                        </p>
+                        
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+
+
+
+                            <a href="@Url.Action("Details", "Art", new { id = artwork.ArtId })" class="btn btn-primary w-25">Details</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">You have not uploaded any artworks yet.</div>
+}
+
+
