@@ -62,12 +62,11 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Art" asp-action="Upload">Upload Art</a>
                                 </li>
                             }
-                            @if (Context.Session.GetString("UserType") == "Customer")
-                            {
+                            
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="AddBalance" asp-action="Index">Add Balance</a>
                                 </li>
-                            }
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-action="History" asp-controller="Transaction">Transaction History</a>
                             </li>

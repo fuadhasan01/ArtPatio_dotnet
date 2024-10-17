@@ -19,32 +19,41 @@ namespace ArtPatio.Controllers
         // GET: /AddBalance
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("UserType") == "Customer")
-            {
+            
                 // Get the current user's balance from the database
                 int userId = HttpContext.Session.GetInt32("Id").Value;
                 int currentBalance = GetUserBalance(userId);
                 ViewBag.CurrentBalance = currentBalance; // Set the current balance to the ViewBag
                 return View();
-            }
-            return RedirectToAction("Index", HttpContext.Session.GetString("UserType"));
+            
         }
 
         [HttpPost]
         public IActionResult Add(int amount)
         {
-            int userId = HttpContext.Session.GetInt32("Id").Value;
+            try
+            {
+                int userId = HttpContext.Session.GetInt32("Id").Value;
 
-            // Update the balance in the database
-            AddUserBalance(userId, amount);
-            int updatedBalance = GetUserBalance(userId);
-            HttpContext.Session.SetString("Balance", updatedBalance.ToString());
+                // Update the balance in the database
+                AddUserBalance(userId, amount);
+                int updatedBalance = GetUserBalance(userId);
+                HttpContext.Session.SetString("Balance", updatedBalance.ToString());
 
-            // Log the balance addition as a transaction
-            LogTransaction(userId, amount, updatedBalance);
+                // Log the balance addition as a transaction
+                LogTransaction(userId, amount, updatedBalance);
 
-            // Redirect to the index to show updated balance
-            return RedirectToAction("Index");
+                TempData["SuccessMessage"] = "Balance updated Successfully!";
+
+                // Redirect to the index to show updated balance
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = "An error occurred while updating the balance. Please try again.";
+
+                // Redirect to the index to show updated balance
+                return RedirectToAction("Index");
+            }
         }
 
         // Method to get the user balance

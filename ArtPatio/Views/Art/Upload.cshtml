@@ -2,6 +2,12 @@
 @{
     ViewData["Title"] = "Upload The Art";
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <h2>Upload Art</h2>
 
 <form asp-action="Upload" method="post" enctype="multipart/form-data">
@@ -29,9 +35,4 @@
     <button type="submit" class="btn btn-primary btn-block w-100 mt-3 text-md-center">Upload</button>
 </form>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
+

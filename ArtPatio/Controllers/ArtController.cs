@@ -99,8 +99,8 @@ namespace ArtPatio.Controllers
             }
 
             // Get the customer ID (buyer) from the session
-            int customerId = HttpContext.Session.GetInt32("Id").GetValueOrDefault();
-            string customerName = HttpContext.Session.GetString("Name");
+            int userId = HttpContext.Session.GetInt32("Id").GetValueOrDefault();
+            string userName = HttpContext.Session.GetString("Name");
 
             // Retrieve the artwork by its ID
             Artwork artwork = _artworkRepository.GetArtworkById(artId);
@@ -114,10 +114,10 @@ namespace ArtPatio.Controllers
             }
 
             // Retrieve the customer's balance
-            decimal customerBalance = _userRepository.GetCustomerBalance(customerId);
+            decimal userBalance = _userRepository.GetCustomerBalance(userId);
 
             // Check if the customer's balance is sufficient
-            if (customerBalance < artwork.Price)
+            if (userBalance < artwork.Price)
             {
                 // If the balance is insufficient, display an error message
                 TempData["ErrorMessage"] = "You have insufficient balance to purchase this artwork.";
@@ -125,24 +125,24 @@ namespace ArtPatio.Controllers
             }
 
             // Update the artwork: set the buyer and change the status to 'Sold'
-            bool purchaseSuccessful = _artworkRepository.BuyArtwork(artId, customerId);
+            bool purchaseSuccessful = _artworkRepository.BuyArtwork(artId, userId);
 
             if (purchaseSuccessful)
             {
                 // Deduct the artwork price from the customer's balance
-                bool customerBalanceUpdated = _userRepository.UpdateCustomerBalance(customerId, customerBalance - artwork.Price);
+                bool userBalanceUpdated = _userRepository.UpdateCustomerBalance(userId, userBalance - artwork.Price);
 
                 // Update the artist's balance by adding the artwork price
                 bool artistBalanceUpdated = _userRepository.UpdateCustomerBalance(artwork.UserId, _userRepository.GetCustomerBalance(artwork.UserId) + artwork.Price);
 
                 // Transaction Logging
-                var customerTransaction = new Transaction
+                var userTransaction = new Transaction
                 {
-                    UserId = customerId,
+                    UserId = userId,
                     TransactionType = "ArtworkPurchased",
                     ArtId = artId,
-                    PreviousBalance = customerBalance,
-                    UpdatedBalance = customerBalance - artwork.Price,
+                    PreviousBalance = userBalance,
+                    UpdatedBalance = userBalance - artwork.Price,
                     TransactionDate = DateTime.Now,
                     ArtistId = artwork.UserId
                 };
@@ -155,17 +155,17 @@ namespace ArtPatio.Controllers
                     PreviousBalance = _userRepository.GetCustomerBalance(artwork.UserId) - artwork.Price,
                     UpdatedBalance = _userRepository.GetCustomerBalance(artwork.UserId),
                     TransactionDate = DateTime.Now,
-                    BuyerId = customerId
+                    BuyerId = userId
                 };
 
                 // Save transactions
-                _transactionRepository.AddTransaction(customerTransaction);
+                _transactionRepository.AddTransaction(userTransaction);
                 _transactionRepository.AddTransaction(artistTransaction);
 
                 // Update the session balance
-                HttpContext.Session.SetString("Balance", _userRepository.GetCustomerBalance(customerId).ToString());
+                HttpContext.Session.SetString("Balance", _userRepository.GetCustomerBalance(userId).ToString());
 
-                if (customerBalanceUpdated && artistBalanceUpdated)
+                if (userBalanceUpdated && artistBalanceUpdated)
                 {
                     // If purchase and balance update are successful, display a success message
                     TempData["SuccessMessage"] = "You have successfully purchased the artwork!";

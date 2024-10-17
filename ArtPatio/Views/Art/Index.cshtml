@@ -17,7 +17,7 @@
 
 <div class="container">
     <div class="row">
-        @if (!Model.Any()) // Check if there are no artworks
+        @if (!Model.Any()) 
         {
             <div class="col-12 text-center">
                 <p class="lead">No arts are available.</p>
@@ -42,14 +42,25 @@
                             </p>
 
 
-                            <p class="card-text text-decoration-none"><span class="fw-bolder">Artist Name:</span> <a href="@Url.Action("ViewArtist","Artist", new{id=artwork.UserId})" class="text-primary text-decoration-none">@artwork.UserName</a><p/>
+                            <p class="card-text text-decoration-none">
+                                <span class="fw-bolder">Artist Name:</span> <a href="@Url.Action("ViewArtist","Artist", new{id=artwork.UserId})" class="text-primary text-decoration-none">@artwork.UserName</a>
+                                <p/>
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
                                 @if (Context.Session.GetString("UserEmail") != null)
                                 {
+                                    if((Context.Session.GetString("UserType") == "Artist" && Context.Session.GetInt32("Id") != artwork.UserId) && artwork.Status=="Available")
+                                    {
+                                        
+                                        <form asp-action="Buy" asp-controller="Art" method="post" class="w-25">
+                                            <input type="hidden" name="artId" value="@artwork.ArtId" />
+                                            <button type="submit" class="btn btn-success w-100">Buy Art</button>
+                                        </form>
+                                    }
+                                   
                                     // User is logged in
-                                    if (artwork.Status=="Available")
+                                    else if (Context.Session.GetString("UserType") != "Artist" && artwork.Status == "Available")
                                     {
                                         <form asp-action="Buy" asp-controller="Art" method="post" class="w-25">
                                             <input type="hidden" name="artId" value="@artwork.ArtId" />

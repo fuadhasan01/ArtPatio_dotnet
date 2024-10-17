@@ -45,7 +45,7 @@ namespace ArtPatio.Repositories
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT ArtId, ArtName, ArtMaterial, ArtDetails, ArtImage, UserId, UserName, Price, Status FROM Artworks";
+                string query = "SELECT ArtId, ArtName, ArtMaterial, ArtDetails, ArtImage, UserId, UserName, Price, Status FROM Artworks ORDER BY UploadDate DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -81,7 +81,7 @@ namespace ArtPatio.Repositories
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT ArtId, ArtName, ArtMaterial, ArtDetails, ArtImage, Price, Status FROM Artworks WHERE UserId = @UserId";
+                string query = "SELECT ArtId, ArtName, ArtMaterial, ArtDetails, ArtImage, Price, Status FROM Artworks WHERE UserId = @UserId ORDER BY UploadDate DESC " ;
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
