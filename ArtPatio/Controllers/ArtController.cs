@@ -32,19 +32,23 @@ namespace ArtPatio.Controllers
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 artworks = artworks.Where(a => a.ArtName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                ViewData["searchTerm"] = searchTerm;
             }
             if (minPrice.HasValue)
             {
                 artworks = artworks.Where(a => a.Price >= minPrice.Value).ToList();
+                ViewData["minPrice"] = minPrice;
             }
 
             if (maxPrice.HasValue)
             {
                 artworks = artworks.Where(a => a.Price <= maxPrice.Value).ToList();
+                ViewData["maxPrice"] = maxPrice;
             }
             if (!string.IsNullOrEmpty(artworkStatus))
             {
                 artworks = artworks.Where(a => a.Status == artworkStatus).ToList();
+                ViewData["artworkStatus"] = artworkStatus;
             }
 
             return View(artworks);

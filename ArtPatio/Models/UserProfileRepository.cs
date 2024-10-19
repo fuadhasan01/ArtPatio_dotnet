@@ -101,6 +101,8 @@ namespace ArtPatio.Repositories
                     // Query to get the user by email and password
                     string query = "SELECT Id, Name, Email, Address, Contact, UserType, Description, Balance FROM UserProfile WHERE Email = @Email AND Password = @Password";
 
+                    
+
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Email", email);

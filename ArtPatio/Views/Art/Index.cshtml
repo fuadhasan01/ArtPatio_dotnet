@@ -20,16 +20,16 @@
 <div class="container mt-4">
     <form asp-action="Index" method="get" class="mb-4" id="filterForm">
         <div class="input-group mb-3">
-            <input type="text" name="searchTerm" class="form-control" placeholder="Search for artworks..." aria-label="Search for artworks..." />
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <input type="text" name="searchTerm" class="form-control" placeholder="Search for artworks..." aria-label="Search for artworks..." value="@ViewData["searchTerm"]" />
+            <button class="btn btn-outline-primary" type="submit">Search</button>
         </div>
 
         <div class="row">
             <div class="col-md-2">
-                <input type="number" name="minPrice" class="form-control" placeholder="Min Price" aria-label="Min Price" step="0.01" />
+                <input type="number" name="minPrice" class="form-control" placeholder="Min Price" aria-label="Min Price" step="0.01" value="@ViewData["minPrice"]" />
             </div>
             <div class="col-md-2">
-                <input type="number" name="maxPrice" class="form-control" placeholder="Max Price" aria-label="Max Price" step="0.01" />
+                <input type="number" name="maxPrice" class="form-control" placeholder="Max Price" aria-label="Max Price" step="0.01" value="@ViewData["maxPrice"]" />
             </div>
             <div class="col-md-2">
                 <button class="btn btn-outline-primary" type="submit">Filter</button>
@@ -38,16 +38,17 @@
             
                 
                 
-            <div class="col-md-6">
-                <label class="text-primary fw-bold">Status:</label>
+            <div class="col-md-4 d-flex gap-2 ">
+                <label class="text-primary h5">Status:</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="artworkStatus" id="statusAvailable" value="Available" onchange="this.form.submit()">
-                    <label class="form-check-label" for="statusAvailable">Available</label>
+                    <input class="form-check-input" type="radio" name="artworkStatus" id="statusAvailable" value="Available" onchange="this.form.submit()" @(ViewData["artworkStatus"]?.ToString() == "Available" ? "checked" : "")>
+                    <label class="form-check-label h5" for="statusAvailable">Available</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="artworkStatus" id="statusSold" value="Sold" onchange="this.form.submit()">
-                    <label class="form-check-label" for="statusSold">Sold</label>
+                    <input class="form-check-input" type="radio" name="artworkStatus" id="statusSold" value="Sold" onchange="this.form.submit()" @(ViewData["artworkStatus"]?.ToString() == "Sold" ? "checked" : "")>
+                    <label class="form-check-label h5" for="statusSold">Sold</label>
                 </div>
+                
             </div>
 
            
@@ -133,3 +134,4 @@
         }
     </div>
 </div>
+
