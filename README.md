@@ -28,13 +28,28 @@ ArtPatio is a digital art gallery platform where artists can showcase their artw
 ## Screenshots
 
 - **Homepage**  
-  ![Homepage](screenshots/index.png)
+  ![Homepage](ArtPatio/screenshots/index.png)
 
 - **Registration Form**  
-  ![Registration](screenshots/signup.png)
+  ![Registration](ArtPatio/screenshots/signup.png)
 
 - **Login Form**  
-  ![Login Form](screenshots/login.png)
+  ![Login Form](ArtPatio/screenshots/login.png)
+
+- **User Profile**  
+  ![User Profile](ArtPatio/screenshots/profile.png)
+
+- **Arts**  
+  ![Arts](ArtPatio/screenshots/arts.png)
+
+- **Upload Art**  
+  ![Upload Art](ArtPatio/screenshots/uploadart.png)
+
+- **Add Balance**  
+  ![Add Balance](ArtPatio/screenshots/addbalance.png)
+
+- **Transaction History**  
+  ![Transaction History](ArtPatio/screenshots/transactionhistory.png)
 
 ---
 
